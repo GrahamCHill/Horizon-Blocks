@@ -11,3 +11,4 @@ require_once get_template_directory() . '/inc/patterns.php';
 require_once get_template_directory() . '/inc/seo.php';
 require_once get_template_directory() . '/inc/admin.php';
 require_once get_template_directory() . '/inc/integrations.php';
+require_once get_template_directory() . '/inc/navigation.php';

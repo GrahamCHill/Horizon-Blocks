@@ -53,12 +53,156 @@ body {
   text-decoration: underline;
 }
 
+.hb-site-header__inner {
+  gap: 1.5rem;
+}
+
+.hb-site-brand {
+  min-width: 0;
+}
+
+.hb-shared-nav {
+  display: flex;
+  align-items: center;
+}
+
+.hb-shared-nav__desktop {
+  display: flex;
+  align-items: center;
+}
+
+.hb-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hb-menu li {
+  position: relative;
+}
+
+.hb-menu a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.hb-menu .sub-menu {
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 0 0 1rem;
+  list-style: none;
+}
+
+.hb-shared-nav__mobile {
+  display: none;
+}
+
+.hb-menu-toggle {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(27, 31, 30, 0.12);
+  border-radius: 999px;
+  background: var(--wp--preset--color--surface);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.hb-mobile-menu-panel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  width: min(22rem, calc(100vw - 3rem));
+  padding: 1.25rem;
+  border: 1px solid rgba(27, 31, 30, 0.08);
+  border-radius: 24px;
+  background: var(--wp--preset--color--surface);
+  box-shadow: var(--hb-shadow);
+  z-index: 20;
+}
+
+.hb-mobile-menu-panel[hidden] {
+  display: none;
+}
+
+.hb-menu--mobile {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.hb-menu--mobile .sub-menu {
+  margin-top: 0.35rem;
+  padding-top: 0;
+}
+
+.hb-shared-nav__mobile {
+  position: relative;
+}
+
+.hb-footer-menus {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.hb-footer-menu-group__title {
+  margin: 0 0 0.75rem;
+  color: var(--wp--preset--color--base);
+  font-size: 1.125rem;
+}
+
+.hb-footer-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hb-footer-menu li + li {
+  margin-top: 0.45rem;
+}
+
+.hb-footer-menu a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hb-footer-menu a:hover,
+.hb-footer-menu a:focus-visible {
+  text-decoration: underline;
+}
+
 @media (max-width: 781px) {
+  .hb-site-header__inner {
+    flex-wrap: nowrap !important;
+  }
+
+  .hb-shared-nav__desktop {
+    display: none;
+  }
+
+  .hb-shared-nav__mobile {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .hb-site-brand .wp-block-site-tagline {
+    display: none;
+  }
+
   .wp-block-cover {
     min-height: auto !important;
   }
 
   .wp-block-columns {
     gap: 1.25rem;
+  }
+}
+
+@media (min-width: 782px) {
+  .hb-shared-nav__mobile {
+    display: none;
   }
 }

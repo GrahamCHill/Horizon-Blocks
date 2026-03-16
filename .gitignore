@@ -3,3 +3,4 @@ assets/css/*.map
 dist/
 .tmp/
 .vs/
+.idea/

@@ -38,11 +38,34 @@ body {
 }
 
 @media (max-width: 781px) {
+  .hb-site-header__inner {
+    flex-wrap: nowrap !important;
+  }
+
+  .hb-shared-nav__desktop {
+    display: none;
+  }
+
+  .hb-shared-nav__mobile {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .hb-site-brand .wp-block-site-tagline {
+    display: none;
+  }
+
   .wp-block-cover {
     min-height: auto !important;
   }
 
   .wp-block-columns {
     gap: 1.25rem;
+  }
+}
+
+@media (min-width: 782px) {
+  .hb-shared-nav__mobile {
+    display: none;
   }
 }

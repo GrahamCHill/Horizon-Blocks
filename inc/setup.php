@@ -25,8 +25,11 @@ if ( ! function_exists( 'horizon_blocks_setup' ) ) {
 
 		register_nav_menus(
 			array(
-				'primary' => __( 'Primary Navigation', 'horizon-blocks' ),
-				'footer'  => __( 'Footer Navigation', 'horizon-blocks' ),
+				'primary'         => __( 'Primary Navigation', 'horizon-blocks' ),
+				'footer'          => __( 'Footer Navigation', 'horizon-blocks' ),
+				'footer_company'  => __( 'Footer Company Menu', 'horizon-blocks' ),
+				'footer_resources'=> __( 'Footer Resources Menu', 'horizon-blocks' ),
+				'footer_legal'    => __( 'Footer Legal Menu', 'horizon-blocks' ),
 			)
 		);
 	}

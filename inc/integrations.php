@@ -61,6 +61,73 @@ if ( ! function_exists( 'horizon_blocks_woocommerce_enqueue_styles' ) ) {
 
 add_filter( 'woocommerce_enqueue_styles', 'horizon_blocks_woocommerce_enqueue_styles' );
 
+if ( ! function_exists( 'horizon_blocks_woocommerce_supports' ) ) {
+	/**
+	 * Adds WooCommerce image sizing and product grid support.
+	 */
+	function horizon_blocks_woocommerce_supports(): void {
+		add_theme_support(
+			'woocommerce',
+			array(
+				'thumbnail_image_width' => 640,
+				'single_image_width'    => 1080,
+				'product_grid'          => array(
+					'default_rows'    => 3,
+					'min_rows'        => 1,
+					'max_rows'        => 6,
+					'default_columns' => 3,
+					'min_columns'     => 1,
+					'max_columns'     => 4,
+				),
+			)
+		);
+	}
+}
+
+add_action( 'after_setup_theme', 'horizon_blocks_woocommerce_supports', 25 );
+
+if ( ! function_exists( 'horizon_blocks_woocommerce_fragments' ) ) {
+	/**
+	 * Keeps the header cart count live.
+	 *
+	 * @param array<string, string> $fragments Existing fragments.
+	 * @return array<string, string>
+	 */
+	function horizon_blocks_woocommerce_fragments( array $fragments ): array {
+		if ( ! function_exists( 'horizon_blocks_render_header_cart' ) ) {
+			return $fragments;
+		}
+
+		$fragments['a.hb-header-cart'] = horizon_blocks_render_header_cart();
+
+		return $fragments;
+	}
+}
+
+add_filter( 'woocommerce_add_to_cart_fragments', 'horizon_blocks_woocommerce_fragments' );
+
+if ( ! function_exists( 'horizon_blocks_shop_columns' ) ) {
+	/**
+	 * Sets a stable product grid column count.
+	 */
+	function horizon_blocks_shop_columns(): int {
+		return 3;
+	}
+}
+
+add_filter( 'loop_shop_columns', 'horizon_blocks_shop_columns' );
+
+if ( ! function_exists( 'horizon_blocks_sale_badge' ) ) {
+	/**
+	 * Simplifies the sale badge markup for theme styling.
+	 */
+	function horizon_blocks_sale_badge( string $html ): string {
+		return '<span class="onsale hb-onsale">' . esc_html__( 'Sale', 'horizon-blocks' ) . '</span>';
+	}
+}
+
+add_filter( 'woocommerce_sale_flash', 'horizon_blocks_sale_badge' );
+
 if ( ! function_exists( 'horizon_blocks_supports_breadcrumbs' ) ) {
 	/**
 	 * Checks whether breadcrumbs should be shown.

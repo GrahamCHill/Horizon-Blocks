@@ -15,6 +15,10 @@ body {
   background: linear-gradient(180deg, #f7f4ee 0%, #fcfaf6 100%);
 }
 
+body.admin-bar .hb-site-header {
+  top: 32px;
+}
+
 .wp-site-blocks {
   min-height: 100vh;
 }
@@ -37,9 +41,29 @@ body {
   box-shadow: var(--hb-shadow);
 }
 
+.hb-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(18px);
+}
+
+.woocommerce ul.products {
+  gap: 1.5rem;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+  padding-left: 0;
+}
+
+.woocommerce ul.products li.product,
+.woocommerce div.product div.images .woocommerce-product-gallery__image img {
+  border-radius: var(--hb-radius-md);
+}
+
 @media (max-width: 781px) {
   .hb-site-header__inner {
-    flex-wrap: nowrap !important;
+    flex-wrap: wrap !important;
   }
 
   .hb-shared-nav__desktop {
@@ -52,6 +76,11 @@ body {
   }
 
   .hb-site-brand .wp-block-site-tagline {
+    display: none;
+  }
+
+  .hb-header-cta,
+  .hb-header-cart {
     display: none;
   }
 

@@ -44,6 +44,7 @@ if ( ! function_exists( 'horizon_blocks_render_primary_menu_shortcode' ) ) {
 
 		ob_start();
 		?>
+		<a class="hb-skip-link screen-reader-text" href="#main-content"><?php esc_html_e( 'Skip to content', 'horizon-blocks' ); ?></a>
 		<nav class="hb-shared-nav" aria-label="<?php esc_attr_e( 'Primary navigation', 'horizon-blocks' ); ?>">
 			<div class="hb-shared-nav__desktop">
 				<?php echo $desktop_menu; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -61,6 +62,8 @@ if ( ! function_exists( 'horizon_blocks_render_primary_menu_shortcode' ) ) {
 					<?php echo $mobile_menu; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			</div>
+			<?php echo horizon_blocks_render_header_cta(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo horizon_blocks_render_header_cart(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</nav>
 		<?php
 		return (string) ob_get_clean();
@@ -68,6 +71,48 @@ if ( ! function_exists( 'horizon_blocks_render_primary_menu_shortcode' ) ) {
 }
 
 add_shortcode( 'horizon_primary_menu', 'horizon_blocks_render_primary_menu_shortcode' );
+
+if ( ! function_exists( 'horizon_blocks_render_header_cta' ) ) {
+	/**
+	 * Renders an optional header CTA from theme settings.
+	 */
+	function horizon_blocks_render_header_cta(): string {
+		if ( ! function_exists( 'horizon_blocks_get_theme_options' ) ) {
+			return '';
+		}
+
+		$options = horizon_blocks_get_theme_options();
+
+		if ( empty( $options['header_cta_label'] ) || empty( $options['header_cta_url'] ) ) {
+			return '';
+		}
+
+		return sprintf(
+			'<a class="hb-header-cta" href="%s">%s</a>',
+			esc_url( $options['header_cta_url'] ),
+			esc_html( $options['header_cta_label'] )
+		);
+	}
+}
+
+if ( ! function_exists( 'horizon_blocks_render_header_cart' ) ) {
+	/**
+	 * Renders a compact cart link when WooCommerce is active.
+	 */
+	function horizon_blocks_render_header_cart(): string {
+		if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return '';
+		}
+
+		return sprintf(
+			'<a class="hb-header-cart" href="%s" aria-label="%s">%s <span class="hb-header-cart__count">%d</span></a>',
+			esc_url( wc_get_cart_url() ),
+			esc_attr__( 'View cart', 'horizon-blocks' ),
+			esc_html__( 'Cart', 'horizon-blocks' ),
+			(int) WC()->cart->get_cart_contents_count()
+		);
+	}
+}
 
 if ( ! function_exists( 'horizon_blocks_render_footer_menus_shortcode' ) ) {
 	/**

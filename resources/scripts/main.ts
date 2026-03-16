@@ -54,8 +54,23 @@ const setupSharedMenu = (): void => {
   });
 };
 
+const setupDesktopDropdowns = (): void => {
+  const items = document.querySelectorAll<HTMLElement>(".hb-menu--desktop .menu-item-has-children");
+
+  items.forEach((item) => {
+    item.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        const link = item.querySelector<HTMLAnchorElement>("a");
+        link?.focus();
+      }
+    });
+  });
+};
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", setupSharedMenu, { once: true });
+  document.addEventListener("DOMContentLoaded", setupDesktopDropdowns, { once: true });
 } else {
   setupSharedMenu();
+  setupDesktopDropdowns();
 }

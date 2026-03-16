@@ -53,6 +53,19 @@
     });
   };
 
+  const setupDesktopDropdowns = () => {
+    const items = document.querySelectorAll(".hb-menu--desktop .menu-item-has-children");
+
+    items.forEach((item) => {
+      item.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          const link = item.querySelector("a");
+          link?.focus();
+        }
+      });
+    });
+  };
+
   const enhanceExternalLinks = () => {
     const links = document.querySelectorAll('a[target="_blank"]');
 
@@ -66,9 +79,11 @@
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", setupSharedMenu, { once: true });
+    document.addEventListener("DOMContentLoaded", setupDesktopDropdowns, { once: true });
     document.addEventListener("DOMContentLoaded", enhanceExternalLinks, { once: true });
   } else {
     setupSharedMenu();
+    setupDesktopDropdowns();
     enhanceExternalLinks();
   }
 })();

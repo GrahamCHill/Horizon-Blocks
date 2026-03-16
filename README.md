@@ -206,6 +206,7 @@ On push and pull request it:
 3. runs the full build
 4. creates the packaged theme ZIP
 5. uploads the ZIP as a workflow artifact
+6. on push, creates a GitHub prerelease for the commit and attaches the ZIP
 
 ## Contributing
 

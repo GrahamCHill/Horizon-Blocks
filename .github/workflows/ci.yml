@@ -3,12 +3,15 @@ name: Theme CI
 on:
   push:
     branches:
-      - "**"
+      - main
+      - master
   pull_request:
 
 jobs:
   validate:
     runs-on: windows-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Check out repository
@@ -36,3 +39,18 @@ jobs:
         with:
           name: horizon-blocks-package
           path: dist/horizon-blocks.zip
+
+      - name: Create commit release
+        if: github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.sha }}
+          name: Horizon Blocks build-${{ github.sha }}
+          prerelease: true
+          generate_release_notes: false
+          body: |
+            Automated build release for commit `${{ github.sha }}`.
+
+            Included asset:
+            - `dist/horizon-blocks.zip`
+          files: dist/horizon-blocks.zip

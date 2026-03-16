@@ -86,6 +86,8 @@ On push and pull request it runs:
 
 The packaged ZIP is uploaded as a workflow artifact.
 
+On push events, the workflow also creates a GitHub prerelease tagged with the commit SHA and attaches `dist/horizon-blocks.zip`.
+
 ## Recommended asset placement
 
 Place source static assets under `resources/static/` in a stable directory structure such as:

@@ -77,9 +77,21 @@ Deployable output and runtime static assets.
 Examples:
 
 - compiled CSS and JavaScript
-- copied images
+- copied and optimized images
 - copied fonts
 - copied Three.js models and textures
+
+## Build automation
+
+The build pipeline is intentionally staged:
+
+1. copy static assets from `resources/static/`
+2. optimize images in `assets/images/`
+3. compile CSS
+4. bundle JavaScript
+5. package the deployable theme when requested
+
+CI mirrors that flow so packaging failures surface before manual release work.
 
 ## Navigation architecture
 
@@ -105,6 +117,7 @@ Current supported integration targets include:
 - WooCommerce
 - Elementor
 - Yoast SEO
+- Contact Form 7
 
 Any future plugin integration should follow the same pattern:
 

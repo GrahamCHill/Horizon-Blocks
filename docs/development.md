@@ -45,6 +45,8 @@ This runs:
 npm run build
 ```
 
+This also optimizes copied image assets in `assets/images/`.
+
 ### Run the full production build and cleanup
 
 ```powershell
@@ -102,6 +104,8 @@ Examples:
 - `resources/static/fonts/brand.woff2`
 
 The build will copy those files into the matching location inside `assets/`.
+
+Image files under `resources/static/images/` are optimized during `npm run build` and `npm run package`.
 
 ## Recommended development loop
 

@@ -174,3 +174,29 @@ if ( ! function_exists( 'horizon_blocks_render_footer_copy_shortcode' ) ) {
 }
 
 add_shortcode( 'horizon_footer_copy', 'horizon_blocks_render_footer_copy_shortcode' );
+
+if ( ! function_exists( 'horizon_blocks_contact_form_7_autop' ) ) {
+	/**
+	 * Keeps Contact Form 7 output predictable inside block layouts.
+	 */
+	function horizon_blocks_contact_form_7_autop(): bool {
+		return false;
+	}
+}
+
+add_filter( 'wpcf7_autop_or_not', 'horizon_blocks_contact_form_7_autop' );
+
+if ( ! function_exists( 'horizon_blocks_contact_form_7_form_class' ) ) {
+	/**
+	 * Adds theme-specific classes to Contact Form 7 forms.
+	 *
+	 * @param string $class Current form class string.
+	 */
+	function horizon_blocks_contact_form_7_form_class( string $class ): string {
+		$class .= ' hb-contact-form';
+
+		return trim( $class );
+	}
+}
+
+add_filter( 'wpcf7_form_class_attr', 'horizon_blocks_contact_form_7_form_class' );

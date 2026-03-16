@@ -5,6 +5,7 @@
   "description": "Modern WordPress block theme with componentized template parts and editable patterns.",
   "scripts": {
     "build:static": "powershell -NoProfile -Command \"if (-not (Test-Path 'resources/static')) { exit 0 }; foreach ($dir in @('assets/images','assets/models','assets/fonts','assets/media')) { if (Test-Path $dir) { Remove-Item $dir -Recurse -Force } }; $sourceRoot = (Resolve-Path 'resources/static').Path; Get-ChildItem 'resources/static' -Recurse -Force | Where-Object { -not $_.PSIsContainer -and $_.Name -ne '.gitkeep' } | ForEach-Object { $relative = $_.FullName.Substring($sourceRoot.Length).TrimStart('\\\\'); $destination = Join-Path (Join-Path (Get-Location) 'assets') $relative; $destinationDir = Split-Path $destination -Parent; if (-not (Test-Path $destinationDir)) { New-Item -ItemType Directory -Path $destinationDir -Force | Out-Null }; Copy-Item $_.FullName -Destination $destination -Force }\"",
+    "build:images": "node scripts/optimize-images.mjs",
     "build:css:sass": "shx mkdir -p .tmp && sass --no-source-map resources/styles/main.scss .tmp/main.css",
     "build:css:post": "postcss .tmp/main.css -o assets/css/main.css",
     "build:css": "run-s build:css:sass build:css:post",
@@ -13,7 +14,7 @@
     "lint:css": "stylelint \"resources/**/*.scss\"",
     "lint": "run-s lint:ts lint:css",
     "build:clean": "shx rm -rf .tmp",
-    "build": "run-s build:static build:css build:js",
+    "build": "run-s build:static build:images build:css build:js",
     "build:prod": "run-s build build:clean",
     "package": "run-s build:prod package:zip",
     "package:zip": "powershell -NoProfile -Command \"if (Test-Path dist) { Remove-Item dist -Recurse -Force }; New-Item -ItemType Directory -Path dist | Out-Null; Compress-Archive -Path assets,inc,parts,patterns,templates,functions.php,README.md,style.css,theme.json -DestinationPath dist/horizon-blocks.zip -Force\"",
@@ -30,9 +31,11 @@
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
     "sass": "^1.86.0",
+    "sharp": "^0.33.5",
     "shx": "^0.4.0",
     "stylelint": "^16.15.0",
     "stylelint-config-standard-scss": "^14.0.0",
+    "svgo": "^3.3.2",
     "typescript": "^5.8.2"
   }
 }

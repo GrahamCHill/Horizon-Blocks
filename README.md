@@ -12,9 +12,10 @@ Horizon Blocks is a modern WordPress block theme built around Full Site Editing,
 | --- | --- |
 | Block theme architecture | Shared template parts, patterns, and core template coverage |
 | Front-end tooling | Sass, TypeScript, esbuild, PostCSS, and packaging scripts |
+| Asset handling | Static asset copy, image optimization, and deployable packaging |
 | SEO baseline | Canonicals, social metadata, JSON-LD, and plugin-aware behavior |
 | Admin settings | Shared organization, contact, footer, social, and CTA fields |
-| Plugin support | WooCommerce, Elementor, and Yoast integration hooks |
+| Plugin support | WooCommerce, Elementor, Yoast SEO, and Contact Form 7 compatibility hooks |
 
 ## Overview
 
@@ -23,7 +24,7 @@ Horizon Blocks is a modern WordPress block theme built around Full Site Editing,
 - Coverage for core WordPress views, including archives, search, single posts, pages, and 404
 - Built-in SEO metadata and structured data baseline
 - Admin-facing theme settings for shared business and presentation data
-- Compatibility hooks for WooCommerce, Elementor, and Yoast SEO
+- Compatibility hooks for WooCommerce, Elementor, Yoast SEO, and Contact Form 7
 - npm-based asset pipeline using Sass, TypeScript, esbuild, PostCSS, and Autoprefixer
 
 ## Requirements
@@ -46,7 +47,7 @@ Horizon Blocks is a modern WordPress block theme built around Full Site Editing,
 ### Available scripts
 
 - `npm run build`
-  Copies static assets from `resources/static/` into `assets/`, then compiles Sass and TypeScript.
+  Copies static assets from `resources/static/` into `assets/`, optimizes images, then compiles Sass and TypeScript.
 - `npm run build:prod`
   Runs the full build and removes temporary intermediate files.
 - `npm run lint`
@@ -72,8 +73,9 @@ Source assets live in `resources/` and compiled output is written to `assets/`.
 The build pipeline now:
 
 1. copies static files from `resources/static/` into `assets/`
-2. compiles Sass and passes the result through PostCSS with Autoprefixer
-3. bundles JavaScript from TypeScript using esbuild
+2. optimizes copied image files in `assets/images/`
+3. compiles Sass and passes the result through PostCSS with Autoprefixer
+4. bundles JavaScript from TypeScript using esbuild
 
 Placeholder folders are included under `resources/static/` with `.gitkeep` files. Those placeholders are ignored by the copy step and are not shipped as runtime assets.
 
@@ -83,6 +85,14 @@ Build overwrite behavior:
 - `assets/js/main.js` is overwritten by the JavaScript build
 - `assets/images/`, `assets/models/`, `assets/fonts/`, and `assets/media/` are refreshed by the static copy step during `npm run build`
 - `npm run dev` also watches `resources/static/` and re-runs the static copy step when those files change
+
+Supported image optimization targets:
+
+- `.jpg`
+- `.jpeg`
+- `.png`
+- `.webp`
+- `.svg`
 
 ## Project structure
 
@@ -152,6 +162,10 @@ Elementor theme support is enabled and theme locations are registered when Eleme
 
 Yoast breadcrumb output is supported through a theme shortcode and can be toggled from the admin settings page.
 
+### Contact Form 7
+
+Contact Form 7 output is supported with theme-level form styling and a small compatibility layer so forms sit cleanly inside block-based layouts.
+
 ## Editing approach
 
 This theme is intended to be customized primarily through:
@@ -180,6 +194,18 @@ For operational details and contributor workflow, see:
 - [docs/build-and-assets.md](C:\Users\Graham\Documents\Code Projects\Wordpress\Wp-theme\docs\build-and-assets.md)
 - [docs/development.md](C:\Users\Graham\Documents\Code Projects\Wordpress\Wp-theme\docs\development.md)
 - [docs/architecture.md](C:\Users\Graham\Documents\Code Projects\Wordpress\Wp-theme\docs\architecture.md)
+
+## Automation
+
+Continuous integration is configured in [.github/workflows/ci.yml](C:\Users\Graham\Documents\Code Projects\Wordpress\Wp-theme\.github\workflows\ci.yml).
+
+On push and pull request it:
+
+1. installs dependencies
+2. runs linting
+3. runs the full build
+4. creates the packaged theme ZIP
+5. uploads the ZIP as a workflow artifact
 
 ## Contributing
 

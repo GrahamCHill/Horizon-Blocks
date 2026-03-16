@@ -5,7 +5,7 @@ This document describes what the theme build does, what the packaging step inclu
 ## Command summary
 
 - `npm run build`
-  Builds production CSS and JavaScript into `assets/`.
+  Copies static assets, optimizes images, and builds production CSS and JavaScript into `assets/`.
 - `npm run build:prod`
   Runs the build and removes temporary intermediate files.
 - `npm run lint`
@@ -20,10 +20,11 @@ This document describes what the theme build does, what the packaging step inclu
 The current build pipeline compiles and bundles:
 
 - `resources/static/**/*` -> `assets/**/*` excluding `.gitkeep`
+- `assets/images/**/*.{jpg,jpeg,png,webp,svg}` -> optimized in place
 - `resources/styles/main.scss` -> `assets/css/main.css`
 - `resources/scripts/main.ts` -> `assets/js/main.js`
 
-Static files are copied into `assets/`, but they are not transformed or optimized by the build.
+Static files are copied into `assets/`. Image files inside `assets/images/` are then optimized in place.
 
 ## Overwrite behavior
 
@@ -42,10 +43,14 @@ The static copy step also refreshes these asset directories from `resources/stat
 It does not touch `assets/css/` or `assets/js/` beyond the normal CSS and JavaScript build outputs.
 
 During `npm run dev`, changes inside `resources/static/` also trigger the same copy step.
+During `npm run build` and `npm run package`, copied files in `assets/images/` are also run through the image optimizer.
 
-That means the following file types are copied as-is:
+The following file types are optimized:
 
 - images such as `.png`, `.jpg`, `.jpeg`, `.webp`, `.svg`
+
+The following file types are copied as-is:
+
 - fonts such as `.woff`, `.woff2`, `.ttf`
 - 3D assets such as `.obj`, `.gltf`, `.glb`
 - video or other media files
@@ -67,6 +72,19 @@ The ZIP currently includes:
 - `theme.json`
 
 Because the entire `assets/` directory is included, any static files copied there during build will be packaged with the theme.
+
+## CI automation
+
+GitHub Actions CI is defined in `.github/workflows/ci.yml`.
+
+On push and pull request it runs:
+
+1. `npm install`
+2. `npm run lint`
+3. `npm run build`
+4. `npm run package`
+
+The packaged ZIP is uploaded as a workflow artifact.
 
 ## Recommended asset placement
 

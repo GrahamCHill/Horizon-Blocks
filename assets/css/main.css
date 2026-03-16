@@ -265,6 +265,69 @@ body {
   font-weight: 700;
 }
 
+.hb-contact-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.hb-contact-form p {
+  margin: 0;
+}
+
+.hb-contact-form label {
+  display: grid;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+.hb-contact-form input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+.hb-contact-form select,
+.hb-contact-form textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(27, 31, 30, 0.14);
+  border-radius: 16px;
+  background: var(--wp--preset--color--surface);
+  color: inherit;
+  font: inherit;
+}
+
+.hb-contact-form textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.hb-contact-form input[type="submit"],
+.hb-contact-form .wpcf7-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--wp--preset--color--primary);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hb-contact-form .wpcf7-spinner {
+  margin: 0.5rem 0 0;
+}
+
+.hb-contact-form .wpcf7-not-valid-tip,
+.hb-contact-form .wpcf7-response-output {
+  font-size: 0.95rem;
+}
+
+.hb-contact-form .wpcf7-response-output {
+  margin: 0.5rem 0 0;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+}
+
 body.admin-bar .hb-site-header {
   top: 32px;
 }

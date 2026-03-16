@@ -46,10 +46,11 @@ jobs:
         with:
           tag_name: build-${{ github.sha }}
           name: Horizon Blocks build-${{ github.sha }}
+          draft: true
           prerelease: true
           generate_release_notes: false
           body: |
-            Automated build release for commit `${{ github.sha }}`.
+            Automated draft prerelease for commit `${{ github.sha }}`.
 
             Included asset:
             - `dist/horizon-blocks.zip`

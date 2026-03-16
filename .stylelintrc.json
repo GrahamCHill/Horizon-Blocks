@@ -1,5 +1,23 @@
 {
   "extends": [
     "stylelint-config-standard-scss"
-  ]
+  ],
+  "rules": {
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "custom-property-pattern": null,
+    "media-feature-range-notation": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "selector-class-pattern": null,
+    "selector-not-notation": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreKeywords": [
+          "currentColor"
+        ]
+      }
+    ]
+  }
 }
